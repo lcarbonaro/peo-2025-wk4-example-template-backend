@@ -14,18 +14,18 @@ app.add_middleware(
 )
 
 # Database connection
-#DATABASE_URL = ""  # TBD  fill in with your own databse url from vercel
-#conn = psycopg2.connect(DATABASE_URL)
-#cur = conn.cursor()
+DATABASE_URL = "postgresql://neondb_owner:npg_h0WerfPSg4Xa@ep-icy-hall-advpwzpk-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require"  # TBD  fill in with your own databse url from vercel
+conn = psycopg2.connect(DATABASE_URL)
+cur = conn.cursor()
 
 # Create table if not exists
-#cur.execute("""
-#CREATE TABLE IF NOT EXISTS urls (
-#    short_code TEXT PRIMARY KEY,
-#    long_url TEXT NOT NULL
-#)
-#""")
-#conn.commit()
+cur.execute("""
+CREATE TABLE IF NOT EXISTS urls (
+    short_code TEXT PRIMARY KEY,
+    long_url TEXT NOT NULL
+)
+""")
+conn.commit()
 
 
 @app.get("/")
