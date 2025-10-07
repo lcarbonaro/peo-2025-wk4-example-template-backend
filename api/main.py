@@ -25,8 +25,8 @@ cur = conn.cursor()
 # Create table if not exists
 cur.execute("""
 CREATE TABLE IF NOT EXISTS items (
-    id   TEXT PRIMARY KEY,
-    desc TEXT NOT NULL
+    itemId   TEXT PRIMARY KEY,
+    itemDesc TEXT NOT NULL
 )
 """)
 conn.commit()
