@@ -13,16 +13,20 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
+
+##### IMPORTANT!!  Fill in with your own database url from vercel #####
+DATABASE_URL = "postgresql://neondb_owner:npg_h0WerfPSg4Xa@ep-icy-hall-advpwzpk-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require"
+#######################
+
 # Database connection
-DATABASE_URL = "postgresql://neondb_owner:npg_h0WerfPSg4Xa@ep-icy-hall-advpwzpk-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require"  # TBD  fill in with your own databse url from vercel
 conn = psycopg2.connect(DATABASE_URL)
 cur = conn.cursor()
 
 # Create table if not exists
 cur.execute("""
-CREATE TABLE IF NOT EXISTS urls (
-    short_code TEXT PRIMARY KEY,
-    long_url TEXT NOT NULL
+CREATE TABLE IF NOT EXISTS items (
+    id   TEXT PRIMARY KEY,
+    desc TEXT NOT NULL
 )
 """)
 conn.commit()
