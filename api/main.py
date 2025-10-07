@@ -1,10 +1,7 @@
 import psycopg2
-from psycopg2.extras import RealDictCursor  # to return response as json objects
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-import os # to fetch environment variables from vercel 
 
 app = FastAPI()
 
@@ -16,12 +13,20 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
+# Database connection
+#DATABASE_URL = ""  # TBD  fill in with your own databse url from vercel
+#conn = psycopg2.connect(DATABASE_URL)
+#cur = conn.cursor()
 
-def get_db_connection():
-    # connection string from environment variable
-    DATABASE_URL = os.environ.get("DATABASE_URL")
-    conn = psycopg2.connect(DATABASE_URL)
-    return conn
+# Create table if not exists
+#cur.execute("""
+#CREATE TABLE IF NOT EXISTS urls (
+#    short_code TEXT PRIMARY KEY,
+#    long_url TEXT NOT NULL
+#)
+#""")
+#conn.commit()
+
 
 @app.get("/")
 def root():
