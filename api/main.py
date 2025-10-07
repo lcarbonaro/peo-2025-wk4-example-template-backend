@@ -1,3 +1,4 @@
+import os
 import psycopg2
 
 from fastapi import FastAPI
@@ -13,18 +14,13 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
-
-##### IMPORTANT!!  Fill in with your own database url from vercel #####
-DATABASE_URL = "postgresql://neondb_owner:npg_h0WerfPSg4Xa@ep-icy-hall-advpwzpk-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require"
-#######################
-
 # Database connection
-conn = psycopg2.connect(DATABASE_URL)
+conn = psycopg2.connect( os.environ.get("DATABASE_URL") )
 cur = conn.cursor()
 
 # Create table if not exists
 cur.execute("""
-CREATE TABLE IF NOT EXISTS items (
+CREATE TABLE IF NOT EXISTS testing (
     itemId   TEXT PRIMARY KEY,
     itemDesc TEXT NOT NULL
 )
