@@ -18,22 +18,6 @@ from psycopg2.extras import RealDictCursor
 
 import os  # to access the DATABASE_URL from Vercel
 
-
-# Initialize the FastAPI application
-app = FastAPI(
-    title="FastAPI Example",
-    description="This is an example of using FastAPI with Postgres"
-)
-
-# Enable CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # star means all client urls allowed 
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 # Database connection
 conn = psycopg2.connect( os.environ.get("DATABASE_URL") ) # must add database to project beforehand
 cur = conn.cursor()
@@ -46,6 +30,23 @@ CREATE TABLE IF NOT EXISTS items (
 )
 """)
 conn.commit()
+
+
+# Initialize the FastAPI application
+app = FastAPI(
+    title="FastAPI Example",
+    description="This is an example of using FastAPI with Postgres"
+)
+
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # can have your front-end url to secure API use
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # Route Definitions
 
@@ -85,8 +86,9 @@ def insert_new_item_record(new_item_desc = Body(...)):
     return {"message": "new record added"}
 
 
-# TO RUN:
+# Usage notes:
 # 1. Put this code in api/main.py and deploy as a Vercel project
 # 2. Make sure you have a database connected to the Vercel project
 # 3. Test by using your-vercel-backend-url/docs
 # 4. Later call from front-end using JavaScript fetch()
+
