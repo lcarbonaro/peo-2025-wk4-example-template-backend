@@ -26,6 +26,7 @@ cur = conn.cursor()
 cur.execute("""
 CREATE TABLE IF NOT EXISTS items (
     item_id SERIAL PRIMARY KEY,
+    item_name TEXT NOT NULL,
     item_desc TEXT NOT NULL
 )
 """)
@@ -77,13 +78,13 @@ def select_all_item_records():
 
 # this POST route inserts a new record in a database table
 @app.post("/item")
-def insert_new_item_record(new_item_desc = Body(...)):    
+def insert_new_item_record(new_item_name = Body(...), new_item_desc = Body(...),):    
     """
     POST a record to database table
     """
-    cur.execute("INSERT INTO items (item_desc) VALUES (%s)", (new_item_desc,) ) # note comma after new_item_desc,
+    cur.execute("INSERT INTO items (item_name,item_desc) VALUES (%s,%s)", (new_item_name, new_item_desc) ) 
     conn.commit()
-    return {"message": "new record added"}
+    return {"success":True, "message": "new record added"}
 
 
 # Usage notes:
@@ -91,4 +92,3 @@ def insert_new_item_record(new_item_desc = Body(...)):
 # 2. Make sure you have a database connected to the Vercel project
 # 3. Test by using your-vercel-backend-url/docs
 # 4. Later call from front-end using JavaScript fetch()
-
